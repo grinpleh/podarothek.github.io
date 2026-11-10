@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fff0f3">
+<title>Для Наденьки ❤️</title>
+<style>
+:root{--pink:#f6a9bb;--deep:#c85d7c;--cream:#fffaf3;--ink:#684451;--rose:#ffe2e9}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:Georgia,"Times New Roman",serif;background:radial-gradient(circle at 15% 10%,#fff 0 8%,transparent 30%),linear-gradient(135deg,#fff6f1,#ffe9ef 55%,#fff8ed);overflow-x:hidden}
+body:before,body:after{content:"♡";position:fixed;color:#f2a7b8;opacity:.18;font-size:190px;z-index:-1;pointer-events:none}
+body:before{top:5%;left:-35px;transform:rotate(-18deg)}body:after{right:-35px;bottom:3%;transform:rotate(18deg)}
+main{width:min(920px,92%);margin:auto;padding:54px 0 28px}
+.hero{text-align:center;padding:36px 16px 28px;animation:rise .9s ease both}
+.kicker{font:600 12px/1.4 Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#c47c8d}
+h1{font-size:clamp(42px,8vw,76px);line-height:1.04;margin:13px 0;color:#b94f70;text-shadow:0 5px 18px #e9a9ba55}
+.hero p{font-size:clamp(17px,3vw,21px);line-height:1.6;max-width:620px;margin:0 auto;color:#805c67}
+.sprinkle{font-size:25px;letter-spacing:13px;margin-top:20px;animation:float 3s ease-in-out infinite}
+.letter{position:relative;background:#fffdf9eF;border:1px solid #f7d7df;border-radius:28px;padding:clamp(24px,5vw,46px);box-shadow:0 18px 50px #bd71821c;margin:18px auto 28px;max-width:760px;animation:rise 1s .12s both}
+.letter:before{content:"✿";position:absolute;right:24px;top:15px;font-size:28px;color:#e7a0b0}
+h2{text-align:center;font-size:clamp(27px,4vw,36px);color:#b94f70;margin:0 0 25px}
+.letter p{font-size:18px;line-height:1.85;margin:0 0 15px}
+.letter p:last-child{margin-bottom:0}
+.game-invite{text-align:center;padding:18px 12px 32px}
+.game-invite h2{margin-bottom:10px}
+.game-invite p{font:16px/1.6 Arial,sans-serif;color:#916b76;margin:0 auto 20px}
+button{border:0;cursor:pointer;font:700 16px Arial,sans-serif;border-radius:999px;padding:15px 27px;color:white;background:linear-gradient(135deg,#e88ca6,#c85d7c);box-shadow:0 9px 22px #c85d7c40;transition:transform .2s,box-shadow .2s}
+button:hover{transform:translateY(-3px);box-shadow:0 13px 25px #c85d7c55}button:active{transform:scale(.97)}
+.game-button{font-size:18px;padding:17px 34px}
+footer{text-align:center;padding:18px 10px 30px;color:#a77a85;font:14px Arial,sans-serif}
+.modal{position:fixed;inset:0;background:#55323f99;backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:14px;z-index:5}
+.modal.open{display:flex;animation:fade .25s ease}
+.game-panel{width:min(850px,100%);height:min(720px,94dvh);min-height:490px;background:linear-gradient(145deg,#fffaf6,#ffeaf0);border:1px solid #fff;border-radius:27px;box-shadow:0 25px 80px #4d203b55;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.game-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:17px 20px;background:#fff9f5;border-bottom:1px solid #f6dce2}
+.game-head h2{font-size:22px;margin:0;text-align:left}
+.stats{display:flex;gap:12px;font:700 14px Arial,sans-serif;color:#a34e6b}
+.stat{background:#ffe8ee;border-radius:14px;padding:9px 12px;white-space:nowrap}
+.close{background:#f7e0e5;color:#9e526a;box-shadow:none;padding:8px 13px;font-size:18px}
+.playfield{position:relative;flex:1;overflow:hidden;touch-action:manipulation;background:radial-gradient(ellipse at center,#fffdf8 0,#fff1f3 70%,#ffe5ec 100%);cursor:crosshair}
+.hint{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:25px;color:#a56d7c;font:16px/1.6 Arial,sans-serif;pointer-events:none}
+.target{position:absolute;border:0;background:transparent;box-shadow:none;padding:0;width:58px;height:58px;display:grid;place-items:center;font-size:35px;line-height:1;filter:drop-shadow(0 5px 5px #b45e7730);animation:pop .22s ease-out;touch-action:manipulation}
+.target:hover{transform:scale(1.16)}.target:active{transform:scale(.8)}
+.target.caught{animation:catch .25s ease forwards;pointer-events:none}
+.game-foot{padding:12px 18px;text-align:center;background:#fffaf7;color:#a77a85;font:13px Arial,sans-serif}
+.result{position:absolute;inset:0;background:#fff9f5f5;display:none;align-items:center;justify-content:center;text-align:center;padding:25px;z-index:2}
+.result.show{display:flex;animation:fade .3s}
+.result-card{max-width:470px}
+.result .big{font-size:64px;margin-bottom:8px}
+.result h3{font-size:32px;color:#b94f70;margin:8px 0}
+.result p{font:17px/1.6 Arial,sans-serif;color:#805c67}
+.score{font-size:48px;font-weight:bold;color:#c85d7c;margin:8px}
+.sound-toggle{background:#f7e0e5;color:#9e526a;box-shadow:none;padding:9px 13px;font-size:13px}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{50%{transform:translateY(-7px)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:scale(.4) rotate(-20deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes catch{to{opacity:0;transform:translateY(-24px) scale(1.7)}}
+@media(max-width:560px){main{padding-top:24px}.letter p{font-size:16px;line-height:1.75}.game-panel{height: min(700px,96dvh);min-height:460px;border-radius:20px}.game-head{padding:13px 12px;flex-wrap:wrap}.game-head h2{font-size:19px}.stats{gap:6px}.stat{padding:8px;font-size:12px}.target{width:54px;height:54px;font-size:32px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="kicker">маленький подарок с большой любовью</div>
+    <h1>Для Наденьки ❤️</h1>
+    <p>Здесь спрятано кое-что особенное. Открывай, улыбайся и собирай поцелуи!</p>
+    <div class="sprinkle" aria-hidden="true">♡ ✿ ♡</div>
+  </header>
+
+  <section class="letter" id="letter" aria-labelledby="letter-title">
+    <h2 id="letter-title">Письмо для тебя 💌</h2>
+    <div id="letterLock" style="text-align:center;padding:18px 8px 24px">
+      <div style="font-size:48px;margin-bottom:12px">🔒💗</div>
+      <p style="font-size:18px;line-height:1.7;margin:0">Это письмо пока запечатано!<br>Собери <strong>30 поцелуев</strong> в игре, чтобы получить возможность его прочитать 💋</p>
+      <p style="font:14px Arial,sans-serif;color:#b17a89;margin:14px 0 0">Твой сюрприз ждёт тебя…</p>
+    </div>
+    <div id="letterBody" hidden>
+      <p>Дорогая Наденька! ❤️</p>
+      <p>Я очень сильно тебя люблю и от всего сердца желаю тебе самого большого счастья, исполнения желаний, бесконечных улыбок и множества прекрасных моментов. Пусть каждый твой день будет наполнен теплом, радостью и любовью.</p>
+      <p>Надеюсь, что книги Анны Джейн и этот миленький гусёнок станут маленькой, но приятной частью твоего праздника и сделают этот день ещё чуточку волшебнее.</p>
+      <p>Я хочу, чтобы ты всегда улыбалась, чувствовала себя любимой и никогда не забывала, насколько ты дорога мне.</p>
+      <p>С днём рождения, моя хорошая! 💗</p>
+    </div>
+  </section>
+
+  <section class="game-invite">
+    <h2>Немного волшебства 💋</h2>
+    <p>Лови милые сюрпризы, пока они не исчезли. У тебя будет 30 секунд!</p>
+    <button class="game-button" id="openGame">Собрать поцелуи 💋</button>
+  </section>
+  <footer>Сделано с любовью · Дима ❤️ Надя</footer>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Игра Собрать поцелуи">
+  <section class="game-panel">
+    <div class="game-head">
+      <h2>Собрать поцелуи 💋</h2>
+      <div class="stats">
+        <div class="stat">Собрано: <span id="score">0</span></div>
+        <div class="stat">Время: <span id="time">30</span> сек</div>
+      </div>
+      <button class="sound-toggle" id="soundToggle" aria-pressed="true">Звук: вкл 🔊</button>
+      <button class="close" id="closeGame" aria-label="Закрыть игру">✕</button>
+    </div>
+    <div class="playfield" id="field">
+      <div class="hint" id="hint">Нажми на любой милый символ, чтобы собрать его!<br>Приготовься… 💗</div>
+      <div class="result" id="result">
+        <div class="result-card">
+          <div class="big">💐💋</div>
+          <h3>Ура, получилось!</h3>
+          <p>Ты собрала целую охапку моих поцелуев! 💋❤️</p>
+          <div class="score"><span id="finalScore">0</span></div>
+          <p>поцелуев и милых сюрпризов</p>
+          <button id="readLetter" style="display:none;margin-bottom:12px">Прочитать 💌</button>
+          <br>
+          <button id="again">Попробовать ещё раз 💗</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-foot">Лови всё, что успеешь — каждый символ приносит одно очко ✨</div>
+  </section>
+</div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const modal=$('modal'), field=$('field'), scoreEl=$('score'), timeEl=$('time');
+  const hint=$('hint'), result=$('result'), finalScore=$('finalScore');
+  const symbols=['💋','🧸','❤️','🌸','🪿','💕','🌷','🐰','✨','🍓'];
+  let score=0, time=30, spawnTimer=null, clockTimer=null, soundOn=true, audioCtx=null, active=false;
+  function beep(freq=660,duration=.09){
+    if(!soundOn)return;
+    try{
+      audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();
+      if(audioCtx.state==='suspended') audioCtx.resume();
+      const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+      osc.type='sine'; osc.frequency.setValueAtTime(freq,audioCtx.currentTime);
+      gain.gain.setValueAtTime(.0001,audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.12,audioCtx.currentTime+.012);
+      gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);
+      osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+duration);
+    }catch(e){}
+  }
+  function clearTargets(){field.querySelectorAll('.target').forEach(el=>el.remove())}
+  function spawn(){
+    if(!active)return;
+    const el=document.createElement('button');
+    el.className='target';el.type='button';el.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+    el.setAttribute('aria-label','Собрать '+el.textContent);
+    const pad=8, maxX=Math.max(pad,field.clientWidth-62), maxY=Math.max(pad,field.clientHeight-68);
+    el.style.left=(pad+Math.random()*(maxX-pad))+'px';
+    el.style.top=(pad+Math.random()*(maxY-pad))+'px';
+    let removed=false;
+    const disappear=setTimeout(()=>{if(!removed)el.remove()},Math.max(620,1450-(30-time)*25));
+    el.addEventListener('click',()=>{
+      if(removed||!active)return;removed=true;clearTimeout(disappear);
+      score++;scoreEl.textContent=score;el.classList.add('caught');
+      beep(520+Math.random()*400,.1);
+      setTimeout(()=>el.remove(),230);
+    },{once:true});
+    field.appendChild(el);
+  }
+  function scheduleSpawn(){
+    if(!active)return;
+    spawn();
+    const interval=Math.max(300,850-(30-time)*18);
+    spawnTimer=setTimeout(scheduleSpawn,interval);
+  }
+  function finish(){
+    active=false;clearTimeout(spawnTimer);clearInterval(clockTimer);clearTargets();
+    finalScore.textContent=score;
+    $('readLetter').style.display=score>=30?'inline-block':'none';
+    result.classList.add('show');beep(880,.2);
+  }
+  function start(){
+    clearTimeout(spawnTimer);clearInterval(clockTimer);clearTargets();
+    score=0;time=30;active=true;scoreEl.textContent='0';timeEl.textContent='30';
+    result.classList.remove('show');hint.style.display='none';
+    scheduleSpawn();
+    clockTimer=setInterval(()=>{time--;timeEl.textContent=time;if(time<=0)finish()},1000);
+  }
+  function open(){modal.classList.add('open');document.body.style.overflow='hidden';start()}
+  function close(){active=false;clearTimeout(spawnTimer);clearInterval(clockTimer);clearTargets();modal.classList.remove('open');document.body.style.overflow=''}
+  $('openGame').addEventListener('click',open);
+  $('closeGame').addEventListener('click',close);
+  $('again').addEventListener('click',start);
+  $('readLetter').addEventListener('click',()=>{
+    if(score<30)return;
+    $('letterLock').hidden=true;
+    $('letterBody').hidden=false;
+    result.classList.remove('show');
+    close();
+    $('letter').scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  $('soundToggle').addEventListener('click',()=>{
+    soundOn=!soundOn;$('soundToggle').textContent=soundOn?'Звук: вкл 🔊':'Звук: выкл 🔇';
+    $('soundToggle').setAttribute('aria-pressed',String(soundOn));if(soundOn)beep();
+  });
+  modal.addEventListener('click',e=>{if(e.target===modal)close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close()});
+})();
+</script>
+</body>
+</html>
